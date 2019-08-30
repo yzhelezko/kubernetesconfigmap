@@ -1,0 +1,52 @@
+{
+  "id": "94fd260a-77ed-4c97-a4aa-2a27039e29s2",
+  "name": "kubernetesconfigmap",
+  "friendlyName": "Variable Save Task",
+  "description": "Saves the build variables as a configmap for kuber",
+  "helpMarkDown": "help",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Deploy"
+  ],
+  "author": "Yury Zhelezko",
+  "version": {
+    "Major": "1",
+    "Minor": "0",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "2.103.0",
+  "groups": [
+    {
+      "name": "missing",
+      "displayName": "Missing variables",
+      "isExpanded": true
+    }
+  ],
+  "inputs": [
+    {
+      "name": "prefixes",
+      "type": "string",
+      "label": "Prefixes",
+      "defaultValue": "GITVERSION,BUILD",
+      "required": true,
+      "helpMarkDown": "Comma delimited list of build prefixes to save. Since we have to save environmental Variables we need to filter."
+    },
+    {
+      "name": "outpath",
+      "type": "filePath",
+      "label": "Output Path",
+      "defaultValue": "$(Build.ArtifactStagingDirectory)",
+      "required": true,
+      "helpMarkDown": "Select a folder to store the dehydrated data."
+    }
+  ],
+  "instanceNameFormat": "Save Build Variables $(prefixes)",
+  "execution": {
+    "PowerShell3": {
+      "target": "$(currentDirectory)\\save-variables.ps1",
+      "argumentFormat": "",
+      "workingDirectory": "$(System.DefaultWorkingDirectory)"
+    }
+  }
+}
